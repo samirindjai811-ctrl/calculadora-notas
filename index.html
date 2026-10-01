@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Notas - 10º Ano</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-card h2 {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-group input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .btn-calc {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-calc:hover {
+            background: var(--primary-dark);
+        }
+
+        .result-box {
+            background: #eff6ff;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .result-box h3 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .result-score {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin: 6px 0;
+        }
+
+        .result-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Calculadora de Notas</h1>
+        <p>Sistema de Avaliação 10º Ano</p>
+    </header>
+
+    <div class="container">
+
+        <!-- TESTES ESCRITOS -->
+        <div class="section-card">
+            <h2>📝 Testes Escritos (50%)</h2>
+            <div class="input-group">
+                <label for="t1">1º Teste (0-20):</label>
+                <input type="number" id="t1" min="0" max="20" placeholder="Ex: 14">
+            </div>
+            <div class="input-group">
+                <label for="t2">2º Teste (0-20):</label>
+                <input type="number" id="t2" min="0" max="20" placeholder="Ex: 15">
+            </div>
+        </div>
+
+        <!-- OBSERVAÇÃO INDIVIDUAL -->
+        <div class="section-card">
+            <h2>👁️ Observação Individual (20%)</h2>
+            <div class="input-group">
+                <label for="obs">Atitude e Participação:</label>
+                <input type="number" id="obs" min="0" max="20" placeholder="Ex: 16">
+            </div>
+        </div>
+
+        <!-- TRABALHOS -->
+        <div class="section-card">
+            <h2>📊 Trabalhos (30%)</h2>
+            <div class="input-group">
+                <label for="trab_ind">Trabalho Individual:</label>
+                <input type="number" id="trab_ind" min="0" max="20" placeholder="Ex: 15">
+            </div>
+            <div class="input-group">
+                <label for="trab_grup">Trabalho em Grupo:</label>
+                <input type="number" id="trab_grup" min="0" max="20" placeholder="Ex: 16">
+            </div>
+            <div class="input-group">
+                <label for="trab_prat">Trabalho Prático:</label>
+                <input type="number" id="trab_prat" min="0" max="20" placeholder="Ex: 14">
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calcularNota()">Calcular Média Final</button>
+
+        <div class="result-box" id="result-container" style="display: none;">
+            <h3>Sua Média Estimada</h3>
+            <div class="result-score" id="final-score">--</div>
+            <div class="result-info" id="status-text">Preencha as notas para ver o resultado.</div>
+        </div>
+
+    </div>
+
+    <script>
+        function calcularNota() {
+            // Testes (50%)
+            const t1 = parseFloat(document.getElementById('t1').value) || 0;
+            const t2 = parseFloat(document.getElementById('t2').value) || 0;
+            
+            // Se tiver preenchido os dois testes, faz a média. Se só tiver 1, conta esse 1.
+            let mediaTestes = 0;
+            let countTestes = 0;
+            if (document.getElementById('t1').value !== "") countTestes++;
+            if (document.getElementById('t2').value !== "") countTestes++;
+            
+            if (countTestes > 0) {
+                mediaTestes = (t1 + t2) / countTestes;
+            }
+
+            // Observação (20%)
+            const obs = parseFloat(document.getElementById('obs').value) || 0;
+
+            // Trabalhos (30%)
+            const tInd = parseFloat(document.getElementById('trab_ind').value) || 0;
+            const tGrup = parseFloat(document.getElementById('trab_grup').value) || 0;
+            const tPrat = parseFloat(document.getElementById('trab_prat').value) || 0;
+
+            let mediaTrabalhos = 0;
+            let countTrab = 0;
+            if (document.getElementById('trab_ind').value !== "") countTrab++;
+            if (document.getElementById('trab_grup').value !== "") countTrab++;
+            if (document.getElementById('trab_prat').value !== "") countTrab++;
+
+            if (countTrab > 0) {
+                mediaTrabalhos = (tInd + tGrup + tPrat) / countTrab;
+            }
+
+            // Cálculo final ponderado
+            const notaFinal = (mediaTestes * 0.50) + (obs * 0.20) + (mediaTrabalhos * 0.30);
+
+            const resultContainer = document.getElementById('result-container');
+            const scoreElement = document.getElementById('final-score');
+            const statusElement = document.getElementById('status-text');
+
+            resultContainer.style.display = "block";
+            scoreElement.textContent = notaFinal.toFixed(1) + " / 20";
+
+            if (notaFinal >= 10) {
+                statusElement.textContent = "Aprovado! Continua o bom trabalho! 🔥";
+                statusElement.style.color = "#16a34a";
+            } else {
+                statusElement.textContent = "Abaixo de 10. Precisas de subir as notas nos próximos testes!";
+                statusElement.style.color = "#dc2626";
+            }
+        }
+    </script>
+</body>
+</html>
